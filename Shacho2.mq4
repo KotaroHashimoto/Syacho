@@ -11,6 +11,7 @@
 
 input int Magic_Number = 1;
 input double Entry_Lot = 0.1;
+input int Dragon_Period = 8;
 
 string thisSymbol;
 
@@ -31,7 +32,7 @@ int getTurboSignal() {
 
 int getDragonSignal() {
 
-  for(int i = 1; i < 9; i++) {
+  for(int i = 1; i < Dragon_Period; i++) {
     if(0 < iCustom(NULL, PERIOD_CURRENT, "DragonArrows", 2, i)) {
       return OP_BUY;
     }
