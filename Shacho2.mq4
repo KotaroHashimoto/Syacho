@@ -15,6 +15,22 @@ input int Dragon_Period = 8;
 
 string thisSymbol;
 
+
+int getOrdersTotal() {
+
+  int count = 0;
+  if(0 < OrdersTotal()) {  
+    if(OrderSelect(0, SELECT_BY_POS)) {
+      if(!StringCompare(OrderSymbol(), thisSymbol) && OrderMagicNumber() == Magic_Number) {
+        count ++;
+      }
+    }
+  }
+
+  return count;
+}
+
+
 int getTurboSignal() {
 
   string buyID = "platinum_turbo-fx bsp";
@@ -75,7 +91,7 @@ void OnTick()
   int dragon = getDragonSignal();
   int turbo = getTurboSignal();
 
-  if(0 < OrdersTotal()) {  
+  if(0 < getOrdersTotal()) {  
     if(OrderSelect(0, SELECT_BY_POS)) {
       if(!StringCompare(OrderSymbol(), thisSymbol) && OrderMagicNumber() == Magic_Number) {
         if((dragon == OP_SELL || turbo != OP_BUY) && OrderType() == OP_BUY) {
