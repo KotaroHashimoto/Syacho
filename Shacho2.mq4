@@ -19,8 +19,9 @@ string thisSymbol;
 int getOrdersTotal() {
 
   int count = 0;
-  if(0 < OrdersTotal()) {  
-    if(OrderSelect(0, SELECT_BY_POS)) {
+  
+  for(int i = 0; i < OrdersTotal(); i++) {
+    if(OrderSelect(i, SELECT_BY_POS)) {
       if(!StringCompare(OrderSymbol(), thisSymbol) && OrderMagicNumber() == Magic_Number) {
         count ++;
       }
