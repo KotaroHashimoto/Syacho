@@ -93,16 +93,18 @@ void OnTick()
   int turbo = getTurboSignal();
 
   if(0 < getOrdersTotal()) {  
-    if(OrderSelect(0, SELECT_BY_POS)) {
-      if(!StringCompare(OrderSymbol(), thisSymbol) && OrderMagicNumber() == Magic_Number) {
-        if((dragon == OP_SELL || turbo != OP_BUY) && OrderType() == OP_BUY) {
-          bool closed = OrderClose(OrderTicket(), OrderLots(), NormalizeDouble(Bid, Digits), 0);
-        }
-        else if((dragon == OP_BUY || turbo != OP_SELL) && OrderType() == OP_SELL) {
-          bool closed = OrderClose(OrderTicket(), OrderLots(), NormalizeDouble(Ask, Digits), 0);
+    for(int i = 0; i < OrdersTotal(); i++) {
+      if(OrderSelect(i, SELECT_BY_POS)) {
+        if(!StringCompare(OrderSymbol(), thisSymbol) && OrderMagicNumber() == Magic_Number) {
+          if((dragon == OP_SELL || turbo != OP_BUY) && OrderType() == OP_BUY) {
+            bool closed = OrderClose(OrderTicket(), OrderLots(), NormalizeDouble(Bid, Digits), 0);
+          }
+          else if((dragon == OP_BUY || turbo != OP_SELL) && OrderType() == OP_SELL) {
+            bool closed = OrderClose(OrderTicket(), OrderLots(), NormalizeDouble(Ask, Digits), 0);
+          }
         }
       }
-    }  
+    }
   }
   
   else {
